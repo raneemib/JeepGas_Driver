@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">JeepGas_Driver</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_order_details">OrderDetailsActivity</string>
+
+    <string-array name="service_arrays">
+        <item>Deliver</item>
+        <item>Repair</item>
+        <item>All</item>
+
+    </string-array>
+</resources>
