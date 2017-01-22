@@ -11,12 +11,17 @@ import com.firebase.client.Firebase;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DBHelper extends SQLiteOpenHelper {
 
-    private Firebase mFirebaseRef; //for fire base reference
-    private DatabaseReference mDataBaseRef;
+    private static final  DatabaseReference mDataBaseRef = FirebaseDatabase.getInstance().getReference();
     private static final String DATABASE_NAME = "Driverdb";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 22;
+
+    // the driver unquie ID
+    private static String DriverID = mDataBaseRef.child("Driver").push().getKey();
 
     private static final String TABLE_DRIVER = "Driver";
     private static final String DRIVERNAME = "companyname";
@@ -169,10 +174,32 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
             //Save in firebase
-            mFirebaseRef = new Firebase("https://jeebgas-server.firebaseio.com/Driver");
-            mDataBaseRef = FirebaseDatabase.getInstance().getReference();
-            mFirebaseRef.child(DRIVERPHONE).setValue(DRIVERNAME);
-            mDataBaseRef.child("Driver").child(DRIVERPHONE).setValue(DRIVERNAME);
+            Map<String, String> FBmap = new HashMap<String, String>();
+            FBmap.put("DRIVERNAME",name);
+            FBmap.put("DRIVERPHONE",phone);
+            FBmap.put("WORKINGAREA",area);
+            FBmap.put("WORKINGHOURSFROM",hours_from);
+            FBmap.put("WORKINGHOURSTILL",hours_till);
+
+            if(service.equals(0)) {
+                FBmap.put("DELIVER","1");
+                FBmap.put("REPAIR","0");
+            }
+            if(service.equals(1)) {
+                FBmap.put("DELIVER","0");
+                FBmap.put("REPAIR","1");
+            }
+            if(service.equals(2)) {
+                FBmap.put("DELIVER","1");
+                FBmap.put("REPAIR","1");
+            }
+
+            FBmap.put("GASSMALL",price_small);
+            FBmap.put("GASBIG",price_big);
+
+
+            mDataBaseRef.child("Driver").child(DriverID).setValue(FBmap);
+
 
 
 
