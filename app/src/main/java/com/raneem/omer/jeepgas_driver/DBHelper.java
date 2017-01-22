@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.firebase.client.Firebase;
 import com.google.firebase.database.DatabaseReference;
@@ -18,10 +19,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final  DatabaseReference mDataBaseRef = FirebaseDatabase.getInstance().getReference();
     private static final String DATABASE_NAME = "Driverdb";
-    private static final int DATABASE_VERSION = 22;
+    private static final int DATABASE_VERSION = 25;
 
-    // the driver unquie ID
-    private static String DriverID = mDataBaseRef.child("Driver").push().getKey();
+    // the driver unquie ID    private static String DriverID = mDataBaseRef.child("Driver").push().getKey();
+    private static String DriverID;
 
     private static final String TABLE_DRIVER = "Driver";
     private static final String DRIVERNAME = "companyname";
@@ -44,6 +45,9 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String CLIENT_SERVICE = "Service";
     private static final String CLIENT_STATUS = "Status";
 
+    private static final String TABLE_DRIVERID = "_DriverID";
+    private static final String DRIVER_ID =  "Driver_ID";
+
 
     private String CREATE_DRIVER_TABLE = "create table if not exists " + TABLE_DRIVER +
             " (_id integer primary key AUTOINCREMENT, "
@@ -57,13 +61,10 @@ public class DBHelper extends SQLiteOpenHelper {
             + DELIVER + " integer, "
             + REPAIR + " integer)";
 
-    private String CREATE_ORDER_TABLE1 = "create table if not exists " + TABLE_ORDER
+    private String CREATE_KEY_TABLE = "create table if not exists " + TABLE_DRIVERID
             + " (_id integer primary key AUTOINCREMENT, "
-            + CLIENT_NAME + " text, "
-            + CLIENT_PHONE + " text, "
-            + CLIENT_AREA + " text, "
-            + CLIENT_SERVICE + " text, "
-            + CLIENT_STATUS + " text)";
+            + DRIVER_ID + " text)";
+
 
     private String CREATE_ORDER_TABLE = "create table if not exists " + TABLE_ORDER +
             " (_id integer primary key AUTOINCREMENT, "
@@ -83,6 +84,19 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        /**TODO
+         * 1- Check if the driver has his own key in the database
+         * 2- If the driver doesnt have any key => create a key, insert into database, assign the variable to this key
+         * 3- If the driver does have a key => assign the variable to this key
+         */
+
+        Cursor c = getDriverID();
+        if(c != null && c.getCount() > 0) {
+            int driverID_Index = c.getColumnIndex(DRIVER_ID);
+            DriverID = c.getString(driverID_Index);
+        } else {
+            insertDriverID();
+        }
     }
 
 
@@ -90,6 +104,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_DRIVER_TABLE);
         db.execSQL(CREATE_ORDER_TABLE);
+        db.execSQL(CREATE_KEY_TABLE);
 
     }
 
@@ -97,8 +112,36 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS '" + TABLE_DRIVER + "';");
         db.execSQL("DROP TABLE IF EXISTS '" + TABLE_ORDER + "';");
+        db.execSQL("DROP TABLE IF EXISTS '" + TABLE_DRIVERID + "';");
         db.execSQL(CREATE_DRIVER_TABLE);
         db.execSQL(CREATE_ORDER_TABLE);
+        db.execSQL(CREATE_KEY_TABLE);
+    }
+
+    public boolean insertDriverID() {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        try {
+            String DriverID = mDataBaseRef.child("Driver").push().getKey();
+            Log.d("DriverID", DriverID);
+            contentValues.put(DRIVER_ID, DriverID);
+            db.insert(TABLE_DRIVERID, null, contentValues);
+            return true;
+        } catch (Exception e) {
+            Log.e("InsertDriverID", e.toString());
+            return false;
+        }
+    }
+
+    public Cursor getDriverID() {
+
+        String selectQuery = "SELECT * FROM " + TABLE_DRIVERID + " LIMIT 1;";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+        return cursor;
     }
 
     public boolean insertDriver_bk(JeebGasDrivers jeebgasdriver) {
@@ -155,15 +198,15 @@ public class DBHelper extends SQLiteOpenHelper {
             contentValues.put(WORKINGAREA, area);
             contentValues.put(WORKINGHOURSFROM, hours_from);
             contentValues.put(WORKINGHOURSTILL, hours_till);
-            if(service.equals(0)) {
+            if(service.equals("0")) {
                 contentValues.put(DELIVER, 1);
                 contentValues.put(REPAIR, 0);
             }
-            if(service.equals(1)) {
+            if(service.equals("1")) {
                 contentValues.put(REPAIR, 1);
                 contentValues.put(DELIVER, 0);
             }
-            if(service.equals(2)) {
+            if(service.equals("2")) {
                 contentValues.put(REPAIR, 1);
                 contentValues.put(DELIVER, 1);
             }
@@ -175,21 +218,23 @@ public class DBHelper extends SQLiteOpenHelper {
 
             //Save in firebase
             Map<String, String> FBmap = new HashMap<String, String>();
+
+
             FBmap.put("DRIVERNAME",name);
             FBmap.put("DRIVERPHONE",phone);
             FBmap.put("WORKINGAREA",area);
             FBmap.put("WORKINGHOURSFROM",hours_from);
             FBmap.put("WORKINGHOURSTILL",hours_till);
 
-            if(service.equals(0)) {
+            if(service.equals("0")) {
                 FBmap.put("DELIVER","1");
                 FBmap.put("REPAIR","0");
             }
-            if(service.equals(1)) {
+            if(service.equals("1")) {
                 FBmap.put("DELIVER","0");
                 FBmap.put("REPAIR","1");
             }
-            if(service.equals(2)) {
+            if(service.equals("2")) {
                 FBmap.put("DELIVER","1");
                 FBmap.put("REPAIR","1");
             }
@@ -201,11 +246,9 @@ public class DBHelper extends SQLiteOpenHelper {
             mDataBaseRef.child("Driver").child(DriverID).setValue(FBmap);
 
 
-
-
             return true;
         } catch (Exception e) {
-
+            Log.e("InsertDriver", e.toString());
             return false;
         }
     }
@@ -247,7 +290,7 @@ public class DBHelper extends SQLiteOpenHelper {
             db.insert(TABLE_ORDER, null, contentValues);
             return true;
         } catch (Exception e) {
-
+            Log.e("InsertOrder", e.toString());
             return false;
         }
     }

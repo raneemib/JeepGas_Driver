@@ -7,6 +7,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -23,6 +27,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.vision.Frame;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -33,6 +38,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleApiClient googleApiClient; // Object that is used to connect to google maps API, must be built to use fused location
     private LocationRequest locationRequest; //Object that requests a quality of service for location updates from fused location
 
+    private FrameLayout frameLayout;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +49,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        frameLayout = (FrameLayout) findViewById(R.id.turnLocationOff);
 
 
         //build google api client for fused location method
@@ -49,6 +58,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+
+        frameLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(googleApiClient.isConnected()) {
+                    googleApiClient.disconnect();
+                    Log.d("Connect Map", "Disconnected");
+                }
+                return false;
+            }
+        });
+
+
+
     }
 
 
@@ -105,6 +128,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return;
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+    }
+
+    public void startUpdate(View v) {
+        if(!googleApiClient.isConnected()) {
+
+            googleApiClient.connect();
+            Log.d("Connect Map", "Connected");
+        }
     }
 
 
