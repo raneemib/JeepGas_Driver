@@ -43,8 +43,8 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAVLHJRrR0zd1wWVjgOFImG6jaFG4My_cY" />
-        <!--RANEEM : "AIzaSyDhoGtI_tKupiBcjn50bS8ffagNN2tENg4"-->
-        <!--OMAR  : "AIzaSyAVLHJRrR0zd1wWVjgOFImG6jaFG4My_cY"-->
+        <!--OMAR : "AIzaSyDhoGtI_tKupiBcjn50bS8ffagNN2tENg4"-->
+        <!--RANEEM  : "AIzaSyAVLHJRrR0zd1wWVjgOFImG6jaFG4My_cY"-->
 
         <activity
             android:name=".MapsActivity"
