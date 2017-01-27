@@ -19,7 +19,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final  DatabaseReference mDataBaseRef = FirebaseDatabase.getInstance().getReference();
     private static final String DATABASE_NAME = "Driverdb";
-    private static final int DATABASE_VERSION = 25;
+    private static final int DATABASE_VERSION = 1;
 
     // the driver unquie ID    private static String DriverID = mDataBaseRef.child("Driver").push().getKey();
     private static String DriverID;
