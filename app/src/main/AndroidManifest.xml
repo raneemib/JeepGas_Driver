@@ -19,12 +19,12 @@
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".PressOrderList"
             android:screenOrientation="portrait" />
@@ -43,14 +43,15 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAVLHJRrR0zd1wWVjgOFImG6jaFG4My_cY" />
-        <!--OMAR : "AIzaSyDhoGtI_tKupiBcjn50bS8ffagNN2tENg4"-->
-        <!--RANEEM  : "AIzaSyAVLHJRrR0zd1wWVjgOFImG6jaFG4My_cY"-->
+        <!-- OMAR : "AIzaSyDhoGtI_tKupiBcjn50bS8ffagNN2tENg4" -->
+        <!-- RANEEM  : "AIzaSyAVLHJRrR0zd1wWVjgOFImG6jaFG4My_cY" -->
 
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
             android:screenOrientation="portrait" />
-        <activity android:name=".OrderDetails"></activity>
+        <activity android:name=".OrderDetails" />
+
     </application>
 
 </manifest>

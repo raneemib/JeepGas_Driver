@@ -17,7 +17,7 @@
             android:layout_weight="1.0"
             android:hint="Client Name"
             android:textSize="25dp"
-            android:textColor="#000000"/>
+            android:textColor="#ffffff"/>
 
         <TextView
             android:id="@+id/client_area"
