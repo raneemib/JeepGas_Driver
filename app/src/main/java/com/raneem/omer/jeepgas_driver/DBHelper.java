@@ -19,7 +19,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final  DatabaseReference mDataBaseRef = FirebaseDatabase.getInstance().getReference();
     private static final String DATABASE_NAME = "Driverdb";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // the driver unquie ID    private static String DriverID = mDataBaseRef.child("Driver").push().getKey();
     private static String DriverID;
@@ -44,6 +44,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String CLIENT_AREA = "Area";
     private static final String CLIENT_SERVICE = "Service";
     private static final String CLIENT_STATUS = "Status";
+    private static final String CLIENT_ID = "ClientID";
 
     private static final String TABLE_DRIVERID = "_DriverID";
     private static final String DRIVER_ID =  "Driver_ID";
@@ -68,6 +69,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private String CREATE_ORDER_TABLE = "create table if not exists " + TABLE_ORDER +
             " (_id integer primary key AUTOINCREMENT, "
+            + CLIENT_ID + " text unique, "
             + CLIENT_NAME + " text, "
             + CLIENT_PHONE + " text, "
             + CLIENT_AREA + " text, "
@@ -275,7 +277,7 @@ public class DBHelper extends SQLiteOpenHelper {
         getWritableDatabase().execSQL(deleteQuery);
     }
 
-    public boolean insertOrder(String name, String phone, String area, String service, String status) {
+    public boolean insertOrder(String driverid, String name, String phone, String area, String service, String status) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -287,6 +289,7 @@ public class DBHelper extends SQLiteOpenHelper {
             contentValues.put(CLIENT_AREA, area);
             contentValues.put(CLIENT_SERVICE, service);
             contentValues.put(CLIENT_STATUS, status);
+            contentValues.put(CLIENT_ID, driverid);
             db.insert(TABLE_ORDER, null, contentValues);
             return true;
         } catch (Exception e) {
