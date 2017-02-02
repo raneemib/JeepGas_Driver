@@ -1,5 +1,6 @@
 package com.raneem.omer.jeepgas_driver;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -58,36 +60,46 @@ public class PressOrderList extends AppCompatActivity implements AdapterView.OnI
 
                 Log.d("Snapshot", dataSnapshot.toString());
                 clients_hashmap = (Map<String, Map<String, String>>) dataSnapshot.getValue();
-                //TODO need to add null test
                 Set<String> keys = clients_hashmap.keySet();
-                for (String i : keys) {
-                    Log.d("INSIDE", i);
+                if(!clients_hashmap.isEmpty()) {
+                    for (String i : keys) {
+                        Log.d("INSIDE", i);
+                        //TODO need to sync better
 
+                        String clientid = i;
+                        String clientname = clients_hashmap.get(i).get("NAME");
+                        String clientaddress = clients_hashmap.get(i).get("ADDRESS");
+                        String clientphone = clients_hashmap.get(i).get("PHONE");
+                        //db.emptyOrder(); // clear the database drivers befor updaiting new ones
+                        String deliver = clients_hashmap.get(i).get("DELIVER");
+                        String repair = clients_hashmap.get(i).get("REPAIR");
+                        String service = "3";
+                        if (deliver.equals("1") && repair.equals("0")) {
+                            service = "0";
+                        }
+                        if (deliver.equals("0") && repair.equals("1")) {
+                            service = "1";
+                        }
+                        if (deliver.equals("1") && repair.equals("1")) {
+                            service = "2";
+                        }
 
-                    String clientid = i;
-                    String clientname = clients_hashmap.get(i).get("NAME");
-                    String clientaddress = clients_hashmap.get(i).get("ADDRESS");
-                    String clientphone = clients_hashmap.get(i).get("PHONE");
-                    //db.emptyOrder(); // clear the database drivers befor updaiting new ones
-                    String deliver = clients_hashmap.get(i).get("DELIVER");
-                    String repair = clients_hashmap.get(i).get("REPAIR");
-                    String service = "3";
-                    if (deliver.equals("1") && repair.equals("0")) {
-                        service = "0";
+                        db.insertOrder(clientid, clientname, clientphone, clientaddress, service, "Approved");
+
+                        c = db.getOrders();
+                        orderCustomAdapter.changeCursor(c);
+
+                        Log.e("JeepGas.Service", "   " + i);
+
                     }
-                    if (deliver.equals("0") && repair.equals("1")) {
-                        service = "1";
-                    }
-                    if (deliver.equals("1") && repair.equals("1")) {
-                        service = "2";
-                    }
+                }else{
 
-                    db.insertOrder(clientid, clientname, clientphone, clientaddress, service, "Approved");
+                    // toast ------> to tell the driver there is no orders:
 
-                    c = db.getOrders();
-                    orderCustomAdapter.changeCursor(c);
-
-                    Log.e("JeepGas.Service", "   " + i);
+                    Context context = getApplicationContext();
+                    CharSequence text = "You Have No Orders";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast.makeText(context, text, duration) .show();
 
                 }
 
