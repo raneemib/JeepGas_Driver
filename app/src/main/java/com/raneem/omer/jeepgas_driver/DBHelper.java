@@ -19,7 +19,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final  DatabaseReference mDataBaseRef = FirebaseDatabase.getInstance().getReference();
     private static final String DATABASE_NAME = "Driverdb";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
 
     // the driver unquie ID    private static String DriverID = mDataBaseRef.child("Driver").push().getKey();
     private static String DriverID;
@@ -45,6 +45,8 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String CLIENT_SERVICE = "Service";
     private static final String CLIENT_STATUS = "Status";
     private static final String CLIENT_ID = "ClientID";
+    private static final String CLIENT_LAT = "ClientLAT";
+    private static final String CLIENT_LNG = "ClientLNG";
 
     private static final String TABLE_DRIVERID = "_DriverID";
     private static final String DRIVER_ID =  "Driver_ID";
@@ -73,6 +75,8 @@ public class DBHelper extends SQLiteOpenHelper {
             + CLIENT_NAME + " text, "
             + CLIENT_PHONE + " text, "
             + CLIENT_AREA + " text, "
+            + CLIENT_LAT + " text, "
+            + CLIENT_LNG + " text, "
             + CLIENT_SERVICE + " text, "
             + CLIENT_STATUS + " text)";
 
@@ -277,7 +281,7 @@ public class DBHelper extends SQLiteOpenHelper {
         getWritableDatabase().execSQL(deleteQuery);
     }
 
-    public boolean insertOrder(String driverid, String name, String phone, String area, String service, String status) {
+    public boolean insertOrder(String clientid, String name, String phone, String area, String lat, String lng, String service, String status) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -289,8 +293,11 @@ public class DBHelper extends SQLiteOpenHelper {
             contentValues.put(CLIENT_AREA, area);
             contentValues.put(CLIENT_SERVICE, service);
             contentValues.put(CLIENT_STATUS, status);
-            contentValues.put(CLIENT_ID, driverid);
+            contentValues.put(CLIENT_ID, clientid);
+            contentValues.put(CLIENT_LAT, lat);
+            contentValues.put(CLIENT_LNG, lng);
             db.insert(TABLE_ORDER, null, contentValues);
+
             return true;
         } catch (Exception e) {
             Log.e("InsertOrder", e.toString());
@@ -316,6 +323,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(driversList, null);
         cursor.moveToFirst();
         return cursor;
+
     }
 
 }

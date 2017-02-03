@@ -60,8 +60,8 @@ public class PressOrderList extends AppCompatActivity implements AdapterView.OnI
 
                 Log.d("Snapshot", dataSnapshot.toString());
                 clients_hashmap = (Map<String, Map<String, String>>) dataSnapshot.getValue();
+                if(clients_hashmap!=null) {
                 Set<String> keys = clients_hashmap.keySet();
-                if(!clients_hashmap.isEmpty()) {
                     for (String i : keys) {
                         Log.d("INSIDE", i);
                         //TODO need to sync better
@@ -70,6 +70,10 @@ public class PressOrderList extends AppCompatActivity implements AdapterView.OnI
                         String clientname = clients_hashmap.get(i).get("NAME");
                         String clientaddress = clients_hashmap.get(i).get("ADDRESS");
                         String clientphone = clients_hashmap.get(i).get("PHONE");
+                        String clientlat = clients_hashmap.get(i).get("lat");
+                        String clientlng = clients_hashmap.get(i).get("lng");
+
+                        Log.d("client lat,lng", clientlat + "," + clientlng);
                         //db.emptyOrder(); // clear the database drivers befor updaiting new ones
                         String deliver = clients_hashmap.get(i).get("DELIVER");
                         String repair = clients_hashmap.get(i).get("REPAIR");
@@ -84,7 +88,7 @@ public class PressOrderList extends AppCompatActivity implements AdapterView.OnI
                             service = "2";
                         }
 
-                        db.insertOrder(clientid, clientname, clientphone, clientaddress, service, "Approved");
+                        db.insertOrder(clientid, clientname, clientphone, clientaddress, clientlat, clientlng, service, "Pending");
 
                         c = db.getOrders();
                         orderCustomAdapter.changeCursor(c);
