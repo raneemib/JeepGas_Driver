@@ -63,7 +63,11 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:onClick="ClickUpdateAccount" />
+                android:onClick="ClickUpdateAccount"
+                android:textColor="#252E80"
+                android:textSize="25sp"
+
+                android:background="@drawable/buttonshape"/>
 
 
             <Button
@@ -76,7 +80,10 @@
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="17dp"
-                android:onClick="ClickOrderList" />
+                android:onClick="ClickOrderList"
+                android:textColor="#252E80"
+                android:textSize="25sp"
+                android:background="@drawable/buttonshape"/>
         </RelativeLayout>
     </LinearLayout>
 
