@@ -56,47 +56,50 @@ public class PressOrderList extends AppCompatActivity implements AdapterView.OnI
         firebaseRef_Driver.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
             @Override
             public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
-
+                db.emptyOrder();
 
                 Log.d("Snapshot", dataSnapshot.toString());
                 clients_hashmap = (Map<String, Map<String, String>>) dataSnapshot.getValue();
                 if(clients_hashmap!=null) {
-                Set<String> keys = clients_hashmap.keySet();
-                    for (String i : keys) {
-                        Log.d("INSIDE", i);
-                        //TODO need to sync better
+                    Set<String> keys = clients_hashmap.keySet();
+                        for (String i : keys) {
+                            Log.d("INSIDE", i);
+                            //TODO need to sync better
 
-                        String clientid = i;
-                        String clientname = clients_hashmap.get(i).get("NAME");
-                        String clientaddress = clients_hashmap.get(i).get("ADDRESS");
-                        String clientphone = clients_hashmap.get(i).get("PHONE");
-                        String clientlat = clients_hashmap.get(i).get("lat");
-                        String clientlng = clients_hashmap.get(i).get("lng");
+                            String clientid = i;
+                            String clientname = clients_hashmap.get(i).get("NAME");
+                            String clientaddress = clients_hashmap.get(i).get("ADDRESS");
+                            String clientphone = clients_hashmap.get(i).get("PHONE");
+                            String clientlat = clients_hashmap.get(i).get("lat");
+                            String clientlng = clients_hashmap.get(i).get("lng");
 
-                        Log.d("client lat,lng", clientlat + "," + clientlng);
-                        //db.emptyOrder(); // clear the database drivers befor updaiting new ones
-                        String deliver = clients_hashmap.get(i).get("DELIVER");
-                        String repair = clients_hashmap.get(i).get("REPAIR");
-                        String service = "3";
-                        if (deliver.equals("1") && repair.equals("0")) {
-                            service = "0";
-                        }
-                        if (deliver.equals("0") && repair.equals("1")) {
-                            service = "1";
-                        }
-                        if (deliver.equals("1") && repair.equals("1")) {
-                            service = "2";
-                        }
+                            Log.d("client lat,lng", clientlat + "," + clientlng);
+                            //db.emptyOrder(); // clear the database drivers befor updaiting new ones
+                            String deliver = clients_hashmap.get(i).get("DELIVER");
+                            String repair = clients_hashmap.get(i).get("REPAIR");
+                            String service = "3";
+                            if (deliver.equals("1") && repair.equals("0")) {
+                                service = "0";
+                            }
+                            if (deliver.equals("0") && repair.equals("1")) {
+                                service = "1";
+                            }
+                            if (deliver.equals("1") && repair.equals("1")) {
+                                service = "2";
+                            }
 
-                        db.insertOrder(clientid, clientname, clientphone, clientaddress, clientlat, clientlng, service, "Pending");
+                            db.insertOrder(clientid, clientname, clientphone, clientaddress, clientlat, clientlng, service, "Pending");
 
-                        c = db.getOrders();
-                        orderCustomAdapter.changeCursor(c);
+                            c = db.getOrders();
+                            orderCustomAdapter.changeCursor(c);
 
-                        Log.e("JeepGas.Service", "   " + i);
+                            Log.e("JeepGas.Service", "   " + i);
 
                     }
                 }else{
+                    db.emptyOrder();
+                    c = db.getOrders();
+                    orderCustomAdapter.changeCursor(c);
 
                     // toast ------> to tell the driver there is no orders:
 

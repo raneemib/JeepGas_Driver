@@ -129,8 +129,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         firebaseRef_Driver.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
             @Override
             public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
-
-
+                db.emptyOrder();
                 Log.d("Snapshot", dataSnapshot.toString());
                 clients_hashmap = (Map<String, Map<String, String>>) dataSnapshot.getValue();
                 if (clients_hashmap != null) {
@@ -189,6 +188,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 } else {
 
+                    db.emptyOrder();
                     // toast ------> to tell the driver there is no orders:
 
                     Context context = getApplicationContext();
