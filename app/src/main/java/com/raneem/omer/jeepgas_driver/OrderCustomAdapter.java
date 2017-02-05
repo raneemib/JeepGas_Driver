@@ -45,6 +45,16 @@ public class OrderCustomAdapter extends CursorAdapter {
 
         client_nameTV.setText(name);
         client_areaTV.setText(area);
+        if(service.equals("0")){
+
+            service = "Deliver";
+
+        }else if(service.equals("1")){
+
+            service = "Repair";
+
+        }else
+            service = "All";
         serviceTV.setText(service);
 
     }
