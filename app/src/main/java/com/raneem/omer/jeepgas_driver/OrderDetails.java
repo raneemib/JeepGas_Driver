@@ -43,9 +43,20 @@ public class OrderDetails extends AppCompatActivity {
 
             tv_companyName1.setText(name);
             tv_address.setText(area);
-            tv_type.setText(service);
             tv_phone.setText(phone);
             tv_status.setText(status);
+            if(service.equals("0")){
+
+                service = "Deliver";
+
+            }else if(service.equals("1")){
+
+                service = "Repair";
+
+            }else
+                service = "All";
+
+            tv_type.setText(service);
         }
 
     }
