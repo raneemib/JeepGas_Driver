@@ -252,6 +252,7 @@ public class DBHelper extends SQLiteOpenHelper {
             mDataBaseRef.child("Driver").child(DriverID).setValue(FBmap);
 
 
+
             return true;
         } catch (Exception e) {
             Log.e("InsertDriver", e.toString());
@@ -275,7 +276,25 @@ public class DBHelper extends SQLiteOpenHelper {
         getWritableDatabase().execSQL(deleteQuery);
     }
 
+
     public void deleteOrder(long id) {
+        String deleteQuery = "delete from " + TABLE_ORDER + " WHERE _id = " + id + ";";
+        getWritableDatabase().execSQL(deleteQuery);
+    }
+
+    public void deleteOrderArchive(long id) {
+
+        //client unquie id
+        Cursor ordercursor;
+        ordercursor = getOrder(id);
+        String orderid = ordercursor.getString( ordercursor.getColumnIndex("ClientID") );
+
+        Log.d("Archive Results ",orderid + DriverID);
+        //remove the order that is done from the current driver list
+        DatabaseReference deletetoarchive = mDataBaseRef.child("Orders").child(DriverID).child(orderid).getRef();
+        Log.d("Archive REF ", deletetoarchive.toString());
+        deletetoarchive.removeValue();
+
 
         String deleteQuery = "delete from " + TABLE_ORDER + " WHERE _id = " + id + ";";
         getWritableDatabase().execSQL(deleteQuery);

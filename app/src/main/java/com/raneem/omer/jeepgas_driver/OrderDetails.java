@@ -63,7 +63,7 @@ public class OrderDetails extends AppCompatActivity {
 
     public void archiveOrder(View v) {
 
-        db.deleteOrder(id);
+        db.deleteOrderArchive(id);
         Toast.makeText(getApplicationContext(), "Order Archived", Toast.LENGTH_SHORT).show();
         finish();
     }
