@@ -194,6 +194,15 @@ android:orientation="horizontal">
         android:layout_marginLeft="10px"
         android:textStyle="bold"/>
 
+    <Button
+        android:id="@+id/btApprove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:onClick="ClickApprove"
+        android:text="Approve" />
+
 </RelativeLayout>
 </LinearLayout>
 

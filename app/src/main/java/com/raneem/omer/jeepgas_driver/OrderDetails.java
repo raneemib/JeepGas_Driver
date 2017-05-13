@@ -2,8 +2,10 @@ package com.raneem.omer.jeepgas_driver;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,7 +60,7 @@ public class OrderDetails extends AppCompatActivity {
 
             tv_type.setText(service);
         }
-
+        Log.d("1st id", String.valueOf(id));
     }
 
     public void archiveOrder(View v) {
@@ -67,4 +69,17 @@ public class OrderDetails extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Order Archived", Toast.LENGTH_SHORT).show();
         finish();
     }
+
+    public void ClickApprove(View v) {
+
+
+        Intent intent = getIntent();
+        id = intent.getLongExtra("id", -1);
+        Log.d("2nd id", String.valueOf(id));
+        db.updateStatus("Approved",id);
+
+        TextView tv_status = (TextView) findViewById(R.id.tv_status);
+            tv_status.setText("Approved");
+        }
+
 }

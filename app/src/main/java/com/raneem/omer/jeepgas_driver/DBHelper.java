@@ -19,7 +19,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final  DatabaseReference mDataBaseRef = FirebaseDatabase.getInstance().getReference();
     private static final String DATABASE_NAME = "Driverdb";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // the driver unquie ID    private static String DriverID = mDataBaseRef.child("Driver").push().getKey();
     private static String DriverID;
@@ -268,6 +268,25 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public void updateStatus(String status,long id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Log.d("I REACHED UPDATESTATUS"," ");
+        /*String strSQL = "UPDATE "+TABLE_ORDER+" SET "+CLIENT_STATUS+" = "+status+" WHERE columnId = "+ id;
+        db.execSQL(strSQL);*/
+        ContentValues args = new ContentValues();
+        args.put(CLIENT_STATUS,"Approved");
+        db.update(TABLE_ORDER, args, "_id" + "='" + id
+                + "'", null);
+
+        Cursor ordercursor;
+        ordercursor = getOrder(id);
+        String orderid = ordercursor.getString( ordercursor.getColumnIndex("ClientID") );
+        mDataBaseRef.child("Archive").child(DriverID).child(orderid).child("STATUS").setValue("Approved");
+        mDataBaseRef.child("Orders").child(DriverID).child(orderid).child("STATUS").setValue("Approved");
+
+    }
+
+
     //TODO : change insert params to OBJECT type Order
     // Order Queries
     public void emptyOrder() {
@@ -291,6 +310,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         Log.d("Archive Results ",orderid + DriverID);
         //remove the order that is done from the current driver list
+        mDataBaseRef.child("Archive").child(DriverID).child(orderid).child("STATUS").setValue("Done");
         DatabaseReference deletetoarchive = mDataBaseRef.child("Orders").child(DriverID).child(orderid).getRef();
         Log.d("Archive REF ", deletetoarchive.toString());
         deletetoarchive.removeValue();

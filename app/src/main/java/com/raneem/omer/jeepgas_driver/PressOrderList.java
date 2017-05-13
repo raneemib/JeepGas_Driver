@@ -72,7 +72,7 @@ public class PressOrderList extends AppCompatActivity implements AdapterView.OnI
                             String clientphone = clients_hashmap.get(i).get("PHONE");
                             String clientlat = clients_hashmap.get(i).get("lat");
                             String clientlng = clients_hashmap.get(i).get("lng");
-
+                            String clientstatus = clients_hashmap.get(i).get("STATUS");
                             Log.d("client lat,lng", clientlat + "," + clientlng);
                             //db.emptyOrder(); // clear the database drivers befor updaiting new ones
                             String deliver = clients_hashmap.get(i).get("DELIVER");
@@ -88,7 +88,7 @@ public class PressOrderList extends AppCompatActivity implements AdapterView.OnI
                                 service = "2";
                             }
 
-                            db.insertOrder(clientid, clientname, clientphone, clientaddress, clientlat, clientlng, service, "Pending");
+                            db.insertOrder(clientid, clientname, clientphone, clientaddress, clientlat, clientlng, service, clientstatus);
 
                             c = db.getOrders();
                             orderCustomAdapter.changeCursor(c);
