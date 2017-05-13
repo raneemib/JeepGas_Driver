@@ -274,15 +274,15 @@ public class DBHelper extends SQLiteOpenHelper {
         /*String strSQL = "UPDATE "+TABLE_ORDER+" SET "+CLIENT_STATUS+" = "+status+" WHERE columnId = "+ id;
         db.execSQL(strSQL);*/
         ContentValues args = new ContentValues();
-        args.put(CLIENT_STATUS,"Approved");
+        args.put(CLIENT_STATUS,status);
         db.update(TABLE_ORDER, args, "_id" + "='" + id
                 + "'", null);
 
         Cursor ordercursor;
         ordercursor = getOrder(id);
         String orderid = ordercursor.getString( ordercursor.getColumnIndex("ClientID") );
-        mDataBaseRef.child("Archive").child(DriverID).child(orderid).child("STATUS").setValue("Approved");
-        mDataBaseRef.child("Orders").child(DriverID).child(orderid).child("STATUS").setValue("Approved");
+        mDataBaseRef.child("Archive").child(DriverID).child(orderid).child("STATUS").setValue(status);
+        mDataBaseRef.child("Orders").child(DriverID).child(orderid).child("STATUS").setValue(status);
 
     }
 

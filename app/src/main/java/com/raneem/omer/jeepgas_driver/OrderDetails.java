@@ -80,6 +80,26 @@ public class OrderDetails extends AppCompatActivity {
 
         TextView tv_status = (TextView) findViewById(R.id.tv_status);
             tv_status.setText("Approved");
+
+        Intent refresh = new Intent(this, PressOrderList.class);
+        startActivity(refresh);
+        finish();
         }
+
+    public void ClickReject(View v) {
+
+
+        Intent intent = getIntent();
+        id = intent.getLongExtra("id", -1);
+        Log.d("2nd id", String.valueOf(id));
+        db.updateStatus("Rejected",id);
+
+        TextView tv_status = (TextView) findViewById(R.id.tv_status);
+        tv_status.setText("Rejected");
+
+        Intent refresh = new Intent(this, PressOrderList.class);
+        startActivity(refresh);
+        finish();
+    }
 
 }
