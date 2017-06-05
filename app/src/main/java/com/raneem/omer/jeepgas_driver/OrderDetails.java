@@ -48,6 +48,7 @@ public class OrderDetails extends AppCompatActivity {
             tv_address.setText(area);
             tv_phone.setText(phone);
             tv_status.setText(status);
+            Log.d("Service is now ",service);
             if(service.equals("0")){
 
                 service = "Deliver";

@@ -78,13 +78,13 @@ public class PressOrderList extends AppCompatActivity implements AdapterView.OnI
                             String deliver = clients_hashmap.get(i).get("DELIVER");
                             String repair = clients_hashmap.get(i).get("REPAIR");
                             String service = "3";
-                            if (deliver=="1" && repair=="0") {
+                            if (deliver.equals("1") && repair.equals("0") ){
                                 service = "0";
                             }
-                            if (deliver=="0" && repair=="1") {
+                            if (deliver.equals("0") && repair.equals("1")) {
                                 service = "1";
                             }
-                            if (deliver=="1" && repair=="1") {
+                            if (deliver.equals("1") && repair.equals("1")) {
                                 service = "2";
                             }
                             //clientid = clientid.replace("-","");
