@@ -33,6 +33,7 @@ public class OrderService extends Service {
     private DataSnapshot LastSnapshot;
     private int oldcount;
     private int newcount;
+    private int reset=0;
 
     public OrderService() {
         Log.d("testing", "OrderService");
@@ -96,18 +97,18 @@ public class OrderService extends Service {
                         String deliver = clients_hashmap.get(i).get("DELIVER");
                         String repair = clients_hashmap.get(i).get("REPAIR");
                         String service = "3";
-                        if (deliver.equals("1") && repair.equals("0")) {
+                        if (deliver=="1" && repair=="0") {
                             service = "0";
                         }
-                        if (deliver.equals("0") && repair.equals("1")) {
+                        if (deliver=="0" && repair=="1") {
                             service = "1";
                         }
-                        if (deliver.equals("1") && repair.equals("1")) {
+                        if (deliver=="1" && repair=="1") {
                             service = "2";
                         }
 
                         Log.d("Service = lat , lng ", clientlat +"  "+ clientlng);
-                        clientid = clientid.replace("-","");
+                        //clientid = clientid.replace("-","");
                         //db.insertOrder(clientid, clientname, clientphone, clientaddress, clientlat, clientlng, service, clientstatus);
 
                         Log.e("JeepGas.Service", "   " + i);
@@ -129,6 +130,9 @@ public class OrderService extends Service {
 
                     }
                 }else{
+                    oldcount = newcount - reset;
+                    newcount = 0;
+                    reset=0;
                     db.emptyOrder();
                     c = db.getOrders();
                     orderCustomAdapter.changeCursor(c);
@@ -142,8 +146,8 @@ public class OrderService extends Service {
 
                 }
 
-
-                Log.d("newcount // oldcount ", String.valueOf(newcount) +"   "+ String.valueOf(oldcount));
+                oldcount = oldcount - reset;
+                Log.d("newcount // oldcount ", String.valueOf(newcount) +"   "+ String.valueOf(oldcount)+ "  Reset is : "+String.valueOf(reset));
                 if(oldcount < newcount) {
                     SendNotificaiton();
                 }else if(oldcount > newcount){
@@ -153,7 +157,8 @@ public class OrderService extends Service {
 
                 }
 
-                oldcount=newcount;
+                oldcount=newcount-reset;
+                reset=0;
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -181,7 +186,10 @@ public class OrderService extends Service {
         mNotificationManager.notify(HELLO_ID, notification);*/
     }
 
-
+    public void Countreset(){
+        Log.d("count reset Active"," Now");
+        reset=1;
+    }
 
     private void SendNotificaiton(){
         String ns = Context.NOTIFICATION_SERVICE;
@@ -218,7 +226,7 @@ public class OrderService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("testing", "onStartCommand");
         // Let it continue running until it is stopped.
-        Toast.makeText(this, "Service Started", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Service Started", Toast.LENGTH_LONG).show();
         return START_STICKY;
     }
 
@@ -245,7 +253,7 @@ public class OrderService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Toast.makeText(this, "Service Destroyed", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Service Destroyed", Toast.LENGTH_LONG).show();
     }
 
     /*@Override

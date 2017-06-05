@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,7 +65,8 @@ public class OrderDetails extends AppCompatActivity {
     }
 
     public void archiveOrder(View v) {
-
+        OrderService os = new OrderService();
+        os.Countreset();
         db.deleteOrderArchive(id);
         Toast.makeText(getApplicationContext(), "Order Archived", Toast.LENGTH_SHORT).show();
         finish();
@@ -100,6 +102,27 @@ public class OrderDetails extends AppCompatActivity {
         Intent refresh = new Intent(this, PressOrderList.class);
         startActivity(refresh);
         finish();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (Integer.parseInt(android.os.Build.VERSION.SDK) < 5
+                && keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Log.d("CDA", "onKeyDown Called");
+            onBackPressed();
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public void onBackPressed() {
+        Log.d("CDA", "onBackPressed Called");
+
+        Intent saveclicked = new Intent(this, MainActivity.class);
+        startActivity(saveclicked);
+
+        return;
     }
 
 }

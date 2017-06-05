@@ -167,6 +167,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         // BitmapDescriptor fixicon = BitmapDescriptorFactory.fromResource(R.drawable.mapmarkerfixicon);
                         // BitmapDescriptor icon ;
                         try {
+                            if(clientlat==null || clientlng==null){
+                                clientlat="0";
+                                clientlng="0";
+                            }
                             lat = Double.parseDouble(clientlat);
                             lng = Double.parseDouble(clientlng);
                         } catch (NumberFormatException e) {
