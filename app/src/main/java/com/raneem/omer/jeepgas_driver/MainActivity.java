@@ -15,6 +15,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mockData = new MockData(getApplicationContext());
         mockData.populateMockData();
+        startService();
+    }
+
+    public void startService() {
+        startService(new Intent(getBaseContext(), OrderService.class));
+    }
+
+    // Method to stop the service
+    public void stopService() {
+        stopService(new Intent(getBaseContext(), OrderService.class));
     }
 
     public void gotoMaps(View v) {
@@ -40,9 +50,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void onDestroy() {
 
+        super.onDestroy();
+        stopService();
 
+    }
 
-
-}
+    }
 
