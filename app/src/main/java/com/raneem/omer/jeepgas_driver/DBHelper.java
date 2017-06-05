@@ -19,7 +19,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final  DatabaseReference mDataBaseRef = FirebaseDatabase.getInstance().getReference();
     private static final String DATABASE_NAME = "Driverdb";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     // the driver unquie ID    private static String DriverID = mDataBaseRef.child("Driver").push().getKey();
     private static String DriverID;
@@ -335,8 +335,14 @@ public class DBHelper extends SQLiteOpenHelper {
             contentValues.put(CLIENT_ID, clientid);
             contentValues.put(CLIENT_LAT, lat);
             contentValues.put(CLIENT_LNG, lng);
-            db.insert(TABLE_ORDER, null, contentValues);
 
+            db.insert(TABLE_ORDER, null, contentValues);
+            /*if(db.insert(TABLE_ORDER, null, contentValues)== -1) {
+                String deleteQuery = "delete from " + TABLE_ORDER + " WHERE ClientID = " + clientid + ";";
+                Log.d("Deleted ", deleteQuery);
+                getWritableDatabase().execSQL(deleteQuery);
+                return false;
+            }*/
             return true;
         } catch (Exception e) {
             Log.e("InsertOrder", e.toString());
@@ -364,6 +370,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
 
     }
+
 
 }
 

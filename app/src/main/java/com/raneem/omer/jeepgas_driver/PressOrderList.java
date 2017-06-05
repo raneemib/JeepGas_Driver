@@ -70,8 +70,8 @@ public class PressOrderList extends AppCompatActivity implements AdapterView.OnI
                             String clientname = clients_hashmap.get(i).get("NAME");
                             String clientaddress = clients_hashmap.get(i).get("ADDRESS");
                             String clientphone = clients_hashmap.get(i).get("PHONE");
-                            String clientlat = clients_hashmap.get(i).get("lat");
-                            String clientlng = clients_hashmap.get(i).get("lng");
+                            String clientlat = clients_hashmap.get(i).get("LAT");
+                            String clientlng = clients_hashmap.get(i).get("LNG");
                             String clientstatus = clients_hashmap.get(i).get("STATUS");
                             Log.d("client lat,lng", clientlat + "," + clientlng);
                             //db.emptyOrder(); // clear the database drivers befor updaiting new ones
@@ -87,7 +87,7 @@ public class PressOrderList extends AppCompatActivity implements AdapterView.OnI
                             if (deliver.equals("1") && repair.equals("1")) {
                                 service = "2";
                             }
-
+                            clientid = clientid.replace("-","");
                             db.insertOrder(clientid, clientname, clientphone, clientaddress, clientlat, clientlng, service, clientstatus);
 
                             c = db.getOrders();
