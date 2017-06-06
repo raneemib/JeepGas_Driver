@@ -84,8 +84,8 @@ public class OrderDetails extends AppCompatActivity {
         TextView tv_status = (TextView) findViewById(R.id.tv_status);
             tv_status.setText("Approved");
 
-        Intent refresh = new Intent(this, PressOrderList.class);
-        startActivity(refresh);
+       // Intent refresh = new Intent(this, PressOrderList.class);
+        //startActivity(refresh);
         finish();
         }
 
@@ -100,8 +100,8 @@ public class OrderDetails extends AppCompatActivity {
         TextView tv_status = (TextView) findViewById(R.id.tv_status);
         tv_status.setText("Rejected");
 
-        Intent refresh = new Intent(this, PressOrderList.class);
-        startActivity(refresh);
+       /* Intent refresh = new Intent(this, PressOrderList.class);
+        startActivity(refresh);*/
         finish();
     }
 
