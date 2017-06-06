@@ -34,6 +34,7 @@ public class OrderService extends Service {
     private int oldcount;
     private int newcount;
     private int reset=0;
+    private boolean first = false;
 
     public OrderService() {
         Log.d("testing", "OrderService");
@@ -146,19 +147,22 @@ public class OrderService extends Service {
 
                 }
 
-                oldcount = oldcount - reset;
-                Log.d("newcount // oldcount ", String.valueOf(newcount) +"   "+ String.valueOf(oldcount)+ "  Reset is : "+String.valueOf(reset));
-                if(oldcount < newcount) {
-                    SendNotificaiton();
-                }else if(oldcount > newcount){
-                    SendCancelNotificaiton();
-                }else{
-                    Log.d("NOTHING HAPPEN", "damit");
+                if(first) {
+                    oldcount = oldcount - reset;
+                    Log.d("newcount // oldcount ", String.valueOf(newcount) + "   " + String.valueOf(oldcount) + "  Reset is : " + String.valueOf(reset));
+                    if (oldcount < newcount) {
+                        SendNotificaiton();
+                    } else if (oldcount > newcount) {
+                        SendCancelNotificaiton();
+                    } else {
+                        Log.d("NOTHING HAPPEN", "damit");
 
+                    }
+
+                    oldcount = newcount - reset;
+                    reset = 0;
                 }
-
-                oldcount=newcount-reset;
-                reset=0;
+                first = true;
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
