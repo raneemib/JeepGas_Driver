@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/wallet_highlighted_text_holo_dark">
+    android:background="#EDEDED">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -319,13 +319,11 @@
             android:layout_height="wrap_content"
             android:text="Save"
             android:id="@+id/savebt"
-            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:onClick="ClickSave"
-            android:textColor="#fff"
+            android:textColor="#FFFFFF"
             android:textSize="25sp"
-
-            android:background="@drawable/buttonshape2"/>
+            android:background="@drawable/buttonshape" />
 
     </RelativeLayout>
 

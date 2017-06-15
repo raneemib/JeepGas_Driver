@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.raneem.omer.jeepgas_driver.OrderDetails"
     android:orientation="vertical"
-    android:background="@color/wallet_highlighted_text_holo_dark">
+    android:background="#EDEDED">
 
     <LinearLayout
     android:layout_width="match_parent"
@@ -210,12 +210,16 @@ android:orientation="horizontal">
             android:layout_height="match_parent"
             android:layout_weight="1.0">
 
-            <Button
+            <ImageButton
                 android:id="@+id/btApprove"
+                android:background="@drawable/approve"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:onClick="ClickApprove"
-                android:text="Approve" />
+                android:text="Approve"
+                android:layout_marginTop="40px"
+                android:layout_marginBottom="40px"
+                android:layout_alignParentStart="true" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -223,12 +227,15 @@ android:orientation="horizontal">
             android:layout_height="match_parent"
             android:layout_weight="1.0">
 
-            <Button
+            <ImageButton
                 android:id="@+id/btReject"
+                android:background="@drawable/reject"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:onClick="ClickReject"
-                android:text="Reject" />
+                android:text="Reject"
+                android:layout_marginTop="40px"
+                android:layout_marginBottom="40px"/>
         </RelativeLayout>
 
     </LinearLayout>
@@ -250,10 +257,9 @@ android:orientation="horizontal">
             android:id="@+id/deleteOrder"
             android:text="Archive Order"
             android:onClick="archiveOrder"
-            android:textColor="#ffffff"
+            android:textColor="#FFFFFF"
             android:textSize="25sp"
-
-            android:background="@drawable/buttonshape2"/>
+            android:background="@drawable/buttonshape"/>
     </RelativeLayout>
 
 </LinearLayout>

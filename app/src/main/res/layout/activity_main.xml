@@ -11,7 +11,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.raneem.omer.jeepgas_driver.MainActivity"
-    android:background="@drawable/appbackground">
+    android:background="#EDEDED">
+    <!-- android:background="@drawable/appbackground"-->
 
 
     <LinearLayout
@@ -31,7 +32,7 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@drawable/jeepgasbutton"
+                android:background="@drawable/updatedjgbt"
                 android:id="@+id/imageButton"
                 android:padding="30dp"
                 android:onClick="gotoMaps"
@@ -66,9 +67,8 @@
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:onClick="ClickUpdateAccount"
-                android:textColor="#252E80"
+                android:textColor="#FFFFFF"
                 android:textSize="25sp"
-
                 android:background="@drawable/buttonshape"/>
 
 
@@ -83,7 +83,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="17dp"
                 android:onClick="ClickOrderList"
-                android:textColor="#252E80"
+                android:textColor="#FFFFFF"
                 android:textSize="25sp"
                 android:background="@drawable/buttonshape"/>
         </RelativeLayout>
