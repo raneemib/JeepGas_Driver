@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.IBinder;
 import android.support.v7.app.NotificationCompat;
+import android.text.format.Time;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -121,8 +122,10 @@ public class OrderService extends Service {
                         if (service.equals("2"))
                             temp="Gas & Repair";
 
+                        String clienttime = clients_hashmap.get(i).get("TIME");
+
                         //Log.d("checking result ", String.valueOf((db.insertOrder(clientid, clientname, clientphone, clientaddress, clientlat, clientlng, service, clientstatus))));
-                        db.insertOrder(clientid, clientname, clientphone, clientaddress, clientlat, clientlng, service, clientstatus);
+                        db.insertOrder(clientid, clientname, clientphone, clientaddress, clientlat, clientlng, service, clientstatus, clienttime);
 
                         c = db.getOrders();
                         orderCustomAdapter.changeCursor(c);

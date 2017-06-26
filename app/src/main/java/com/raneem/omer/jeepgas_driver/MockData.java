@@ -1,6 +1,7 @@
 package com.raneem.omer.jeepgas_driver;
 
 import android.content.Context;
+import android.text.format.Time;
 
 /**
  * Created by Omer on 1/13/2017.
@@ -19,8 +20,10 @@ public class MockData {
 
     public void populateMockData() {
         db.emptyOrder();
-        db.insertOrder("-325j3igftj3i4tg4ffergt", "Steven", "9724569987", "Jerusalem","31.822307", "35.235999", "Deliver", "Pending");
-        db.insertOrder("REG345t34weg4343g", "Omer", "972543459456", "Jerusalem","31.815894", "35.205624", "Repair", "Pending");
-        db.insertOrder("-L435tfgdew325", "Raneem", "972526595612", "Jerusalem","31.769881", "35.194280", "Deliver", "Pending");
+
+
+        db.insertOrder("-325j3igftj3i4tg4ffergt", "Steven", "9724569987", "Jerusalem","31.822307", "35.235999", "Deliver", "Pending", "0");
+        db.insertOrder("REG345t34weg4343g", "Omer", "972543459456", "Jerusalem","31.815894", "35.205624", "Repair", "Pending", "0");
+        db.insertOrder("-L435tfgdew325", "Raneem", "972526595612", "Jerusalem","31.769881", "35.194280", "Deliver", "Pending", "0");
     }
 }

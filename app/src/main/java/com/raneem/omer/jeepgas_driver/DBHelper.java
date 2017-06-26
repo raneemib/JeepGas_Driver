@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.format.Time;
 import android.util.Log;
 
 import com.firebase.client.Firebase;
@@ -19,7 +20,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final  DatabaseReference mDataBaseRef = FirebaseDatabase.getInstance().getReference();
     private static final String DATABASE_NAME = "Driverdb";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 5;
 
     // the driver unquie ID    private static String DriverID = mDataBaseRef.child("Driver").push().getKey();
     private static String DriverID;
@@ -47,6 +48,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String CLIENT_ID = "ClientID";
     private static final String CLIENT_LAT = "ClientLAT";
     private static final String CLIENT_LNG = "ClientLNG";
+    private static final String CLIENT_TIME = "ClientTime";
 
     private static final String TABLE_DRIVERID = "_DriverID";
     private static final String DRIVER_ID =  "Driver_ID";
@@ -77,6 +79,7 @@ public class DBHelper extends SQLiteOpenHelper {
             + CLIENT_AREA + " text, "
             + CLIENT_LAT + " text, "
             + CLIENT_LNG + " text, "
+            + CLIENT_TIME + " double default 0, "
             + CLIENT_SERVICE + " text, "
             + CLIENT_STATUS + " text)";
 
@@ -320,7 +323,7 @@ public class DBHelper extends SQLiteOpenHelper {
         getWritableDatabase().execSQL(deleteQuery);
     }
 
-    public boolean insertOrder(String clientid, String name, String phone, String area, String lat, String lng, String service, String status) {
+    public boolean insertOrder(String clientid, String name, String phone, String area, String lat, String lng, String service, String status, String time) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -335,6 +338,9 @@ public class DBHelper extends SQLiteOpenHelper {
             contentValues.put(CLIENT_ID, clientid);
             contentValues.put(CLIENT_LAT, lat);
             contentValues.put(CLIENT_LNG, lng);
+            contentValues.put(CLIENT_TIME,time);
+
+            Log.e("Now orderTIME", String.valueOf(time));
 
             db.insert(TABLE_ORDER, null, contentValues);
             /*if(db.insert(TABLE_ORDER, null, contentValues)== -1) {
@@ -363,7 +369,7 @@ public class DBHelper extends SQLiteOpenHelper {
     // Getting all orders
     public Cursor getOrders() {
 
-        String driversList = "SELECT * FROM " + TABLE_ORDER + ";";
+        String driversList = "SELECT * FROM " + TABLE_ORDER + " ORDER BY " + CLIENT_TIME + " ASC;";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(driversList, null);
         cursor.moveToFirst();
@@ -372,6 +378,17 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
+    public void updateOrderTime(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Time now = new Time();
+        now.setToNow();
+        Log.d("REACHED UpdateTIME", String.valueOf(now));
+
+        ContentValues args = new ContentValues();
+        args.put(CLIENT_TIME, String.valueOf(now));
+        db.update(TABLE_ORDER, args, "_id" + "='" + id
+                + "'", null);
+    }
 }
 
 
