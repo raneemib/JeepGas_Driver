@@ -16,6 +16,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
+import static java.security.AccessController.getContext;
+
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final  DatabaseReference mDataBaseRef = FirebaseDatabase.getInstance().getReference();
@@ -321,6 +323,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         String deleteQuery = "delete from " + TABLE_ORDER + " WHERE _id = " + id + ";";
         getWritableDatabase().execSQL(deleteQuery);
+
     }
 
     public boolean insertOrder(String clientid, String name, String phone, String area, String lat, String lng, String service, String status, String time) {
