@@ -195,7 +195,7 @@ public class OrderService extends Service {
 
                 .setSmallIcon(R.drawable.cast_ic_notification_small_icon)
                 .setContentTitle("JeebGas-Drivers")
-                .setContentText("An Order Has Been Canceled")
+                .setContentText("An Order Has Been Deleted")
                 .build();
 
         mBuilder.flags |= Notification.FLAG_AUTO_CANCEL;
