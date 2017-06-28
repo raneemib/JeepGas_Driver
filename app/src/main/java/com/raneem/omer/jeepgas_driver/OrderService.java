@@ -141,13 +141,6 @@ public class OrderService extends Service {
                     c = db.getOrders();
                     orderCustomAdapter.changeCursor(c);
 
-                    // toast ------> to tell the driver there is no orders:
-
-                    Context context = getApplicationContext();
-                    CharSequence text = "You Have No Orders";
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast.makeText(context, text, duration) .show();
-
                 }
 
                 if(first) {
@@ -173,24 +166,6 @@ public class OrderService extends Service {
             }
         });
 
-        /* // this
-        String ns = Context.NOTIFICATION_SERVICE;
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
-
-        int icon = R.drawable.common_google_signin_btn_icon_light;
-        CharSequence tickerText = "Test"; // ticker-text
-        long when = System.currentTimeMillis();
-        Context context = getApplicationContext();
-        CharSequence contentTitle = "Hello";
-        CharSequence contentText = "Testing";
-        Intent notificationIntent = new Intent(this, PressOrderList.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-        Notification notification = new Notification(icon, tickerText, when);
-        notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
-
-// and this
-        int HELLO_ID = 1;
-        mNotificationManager.notify(HELLO_ID, notification);*/
     }
 
     public void Countreset(){
@@ -233,7 +208,6 @@ public class OrderService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("testing", "onStartCommand");
         // Let it continue running until it is stopped.
-        Toast.makeText(this, "Service Started", Toast.LENGTH_LONG).show();
         return START_STICKY;
     }
 
@@ -260,7 +234,6 @@ public class OrderService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Toast.makeText(this, "Service Destroyed", Toast.LENGTH_LONG).show();
     }
 
     /*@Override

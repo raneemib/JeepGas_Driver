@@ -90,22 +90,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 return false;
             }
         });
-        /*
-        db = new DBHelper(getApplicationContext());
-        c=db.getOrders();
 
-        int nameIndex = c.getColumnIndex("Name");
-        int lngIndex = c.getColumnIndex("ClientLAT");
-        int latIndex = c.getColumnIndex("ClientLNG");
-
-        Log.d("MAP Test BEFOR", name + lat + lng);
-
-        name = c.getString(nameIndex);
-        lat = c.getDouble(latIndex);
-        lng = c.getDouble(lngIndex);
-
-        Log.d("MAP Test AFTER", name +"   "+ lat +"   "+ lng);
-        */
     }
 
 
@@ -160,12 +145,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             service = "2";
                         }
 
-                        //db.insertOrder(clientid, clientname, clientphone, clientaddress, clientlat, clientlng, service, "Pending");
 
-                        //c = db.getOrders();
-                        // BitmapDescriptor gasicon = BitmapDescriptorFactory.fromResource(R.drawable.mapmarkergasicon);
-                        // BitmapDescriptor fixicon = BitmapDescriptorFactory.fromResource(R.drawable.mapmarkerfixicon);
-                        // BitmapDescriptor icon ;
                         try {
                             if(clientlat==null || clientlng==null){
                                 clientlat="0";
@@ -210,34 +190,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
-        /*
-        c=db.getOrders();
 
-        int nameIndex = c.getColumnIndex("Name");
-        int lngIndex = c.getColumnIndex("ClientLat");
-        int latIndex = c.getColumnIndex("ClientLng");
-
-        name = c.getString(nameIndex);
-        lat = c.getDouble(latIndex);
-        lng = c.getDouble(lngIndex);
-
-        Log.d(" no idea testing", name + lat + lng);
-        */
-        /**
-         *MOCK DATA
-         *TODO: Remove mockdata and make clients orders locations dynamic
-         **/
         BitmapDescriptor gasicon = BitmapDescriptorFactory.fromResource(R.drawable.mapmarkergasicon);
         BitmapDescriptor fixicon = BitmapDescriptorFactory.fromResource(R.drawable.mapmarkerfixicon);
 
-        LatLng currentLocation_tmp1 = new LatLng(31.822307, 35.235999);
-        mMap.addMarker(new MarkerOptions().position(currentLocation_tmp1).title("Steve").icon(gasicon));
-
-        LatLng currentLocation_tmp2 = new LatLng(31.815894, 35.205624);
-        mMap.addMarker(new MarkerOptions().position(currentLocation_tmp2).title("Omer").icon(fixicon));
-
-        LatLng currentLocation_tmp3 = new LatLng(31.769881, 35.194280);
-        mMap.addMarker(new MarkerOptions().position(currentLocation_tmp3).title("Raneem").icon(gasicon));
 
     }
 

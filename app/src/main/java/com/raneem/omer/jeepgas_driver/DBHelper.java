@@ -188,20 +188,6 @@ public class DBHelper extends SQLiteOpenHelper {
             String deleteQuery = "delete from " + TABLE_DRIVER + ";";
             getWritableDatabase().execSQL(deleteQuery);
 
-            /*
-             private static final String DRIVERNAME = "companyname";
-    private static final String DRIVERPHONE = "phone";
-    private static final String WORKINGAREA = "workingarea";
-    private static final String WORKINGHOURS = "workinghours";
-    private static final String WORKINGHOURSFROM = "workinghoursFrom";
-    private static final String WORKINGHOURSTILL = "workinghoursTill";
-    private static final String SERVICETYPE = "servicetype";
-    private static final String DELIVER = "deliver";
-    private static final String REPAIR = "repair";
-    private static final String GASPRICE = "gasprice";
-    private static final String GASBIG = "gasbig";
-    private static final String GASSMALL= "gassmall";
-             */
 
             //save in sqlite
             contentValues.put(DRIVERNAME, name);
@@ -346,12 +332,7 @@ public class DBHelper extends SQLiteOpenHelper {
             Log.e("Now orderTIME", String.valueOf(time));
 
             db.insert(TABLE_ORDER, null, contentValues);
-            /*if(db.insert(TABLE_ORDER, null, contentValues)== -1) {
-                String deleteQuery = "delete from " + TABLE_ORDER + " WHERE ClientID = " + clientid + ";";
-                Log.d("Deleted ", deleteQuery);
-                getWritableDatabase().execSQL(deleteQuery);
-                return false;
-            }*/
+
             return true;
         } catch (Exception e) {
             Log.e("InsertOrder", e.toString());

@@ -47,21 +47,7 @@ public class PressUpdateAccount extends AppCompatActivity {
         DBHelper db = new DBHelper(getApplicationContext());
         Cursor driverCursor = db.getDriver();
 
-        /*
-        private static final String TABLE_DRIVER = "Driver";
-    private static final String DRIVERNAME = "companyname";
-    private static final String DRIVERPHONE = "phone";
-    private static final String WORKINGAREA = "workingarea";
-    private static final String WORKINGHOURS = "workinghours";
-    private static final String WORKINGHOURSFROM = "workinghoursFrom";
-    private static final String WORKINGHOURSTILL = "workinghoursTill";
-    private static final String SERVICETYPE = "servicetype";
-    private static final String DELIVER = "deliver";
-    private static final String REPAIR = "repair";
-    private static final String GASPRICE = "gasprice";
-    private static final String GASBIG = "gasbig";
-    private static final String GASSMALL= "gassmall";
-         */
+
 
         if (driverCursor.moveToFirst()) {
             String name = driverCursor.getString(driverCursor.getColumnIndex("companyname"));
@@ -121,14 +107,7 @@ public class PressUpdateAccount extends AppCompatActivity {
     }
     private void SaveAccInfo(){
         DBHelper db = new DBHelper(this);
-        //JeebGasDrivers jeebGasDriver = new JeebGasDrivers(getApplicationContext());
 
-        /*jeebGasDriver.setDrivername(drivernametf.getText().toString());
-        jeebGasDriver.setDriverphone(phonenumbertf.getText().toString());
-        jeebGasDriver.setWorkingarea(workingareatf.getText().toString());
-        jeebGasDriver.setWorkinghours(workinghourstf.getText().toString());
-        jeebGasDriver.setGasprice(gaspricetf.getText().toString());
-        jeebGasDriver.setServicetype(servicetypetf.getText().toString());*/
 
         String name = drivernametf.getText().toString();
         String phone = phonetf.getText().toString();
